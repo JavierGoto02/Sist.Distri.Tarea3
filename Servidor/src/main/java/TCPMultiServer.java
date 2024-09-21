@@ -1,10 +1,11 @@
-
-
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
-
+/*
+ * Acepta conexiones de clientes y lo delega a un hilo
+ * esta clase manejara los usuarios en linea
+ */
 
 
 public class TCPMultiServer {
@@ -13,6 +14,7 @@ public class TCPMultiServer {
 	boolean listening = true;
 	List<TCPServerHilo> hilosClientes; //almacenar los hilos (no se utiliza en el ejemplo, se deja para que el alumno lo utilice)
 	List<String> usuarios; //almacenar una lista de usuarios (no se utiliza, se deja para que el alumno lo utilice)
+    List<Persona> usuariosOnline; // Lista de usuarios en linea
 
     public void ejecutar() throws IOException {
         ServerSocket serverSocket = null;
@@ -41,7 +43,7 @@ public class TCPMultiServer {
     	
     	tms.hilosClientes = new ArrayList<TCPServerHilo>();
     	tms.usuarios = new ArrayList<String>();
-    	
+        tms.usuariosOnline = new ArrayList<Persona>();    	
     	tms.ejecutar();
     	
     }

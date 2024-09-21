@@ -1,11 +1,14 @@
 import redis.clients.jedis.Jedis;
-
+/* Esta clase se encarga de la conexión con la base de datos Redis
+   agregar Persona y recuperar Persona  
+*/
 public class RedisDB {
     private Jedis jedis;
-
+    private String host = "localhost";
+    private int port = 6379;
     // Constructor que establece la conexión
-    public RedisDB(String host, int port) {
-        jedis = new Jedis(host, port);
+    public RedisDB() {
+        jedis = new Jedis(this.host, this.port);
     }
 
     // Método para almacenar una persona
