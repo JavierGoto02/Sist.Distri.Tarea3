@@ -1,6 +1,7 @@
 import redis.clients.jedis.Jedis;
 
-public class RedisExample {
+public class RedisExample
+{
     public static void main(String[] args) {
         // Conectarse al servidor Redis en localhost y el puerto 6379
         Jedis jedis = new Jedis("localhost", 6379);
