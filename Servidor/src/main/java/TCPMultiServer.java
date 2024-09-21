@@ -2,22 +2,24 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
+/*
+ * Acepta conexiones de clientes y lo delega a un hilo
+ * esta clase manejara los usuarios en linea
+ */
 
 
+public class TCPMultiServer {
 
-public class TCPMultiServer
-{
-
-    //variables compartidas
-    boolean listening = true;
-    List<TCPServerHilo> hilosClientes; //almacenar los hilos (no se utiliza en el ejemplo, se deja para que el alumno lo utilice)
-    List<String> usuarios; //almacenar una lista de usuarios (no se utiliza, se deja para que el alumno lo utilice)
+	//variables compartidas
+	boolean listening = true;
+	List<TCPServerHilo> hilosClientes; //almacenar los hilos (no se utiliza en el ejemplo, se deja para que el alumno lo utilice)
+	List<String> usuarios; //almacenar una lista de usuarios (no se utiliza, se deja para que el alumno lo utilice)
+    List<Persona> usuariosOnline; // Lista de usuarios en linea
 
     public void ejecutar() throws IOException {
         ServerSocket serverSocket = null;
 
         try {
-            //Servidor escucha en el puerto 4444
             serverSocket = new ServerSocket(4444);
         } catch (IOException e) {
             System.err.println("No se puede abrir el puerto: 4444.");
@@ -26,23 +28,23 @@ public class TCPMultiServer
         System.out.println("Puerto abierto: 4444.");
 
         while (listening) {
-
-            TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
+        	
+        	TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
             hilosClientes.add(hilo);
             hilo.start();
         }
 
         serverSocket.close();
     }
-
+    
     public static void main(String[] args) throws IOException {
-
-        TCPMultiServer tms = new TCPMultiServer();
-
-        tms.hilosClientes = new ArrayList<TCPServerHilo>();
-        tms.usuarios = new ArrayList<String>();
-
-        tms.ejecutar();
-
+    	
+    	TCPMultiServer tms = new TCPMultiServer();
+    	
+    	tms.hilosClientes = new ArrayList<TCPServerHilo>();
+    	tms.usuarios = new ArrayList<String>();
+        tms.usuariosOnline = new ArrayList<Persona>();    	
+    	tms.ejecutar();
+    	
     }
 }
