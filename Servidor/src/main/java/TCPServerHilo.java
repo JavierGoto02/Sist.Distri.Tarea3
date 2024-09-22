@@ -12,6 +12,7 @@ public class TCPServerHilo extends Thread
 
     private Socket socket = null;
     TCPMultiServer servidor;
+    Persona personaLogueada;
     // Metodos: almacenarPersona(Persona persona), recuperarPersona(Long cedula)
 
     
@@ -25,15 +26,24 @@ public class TCPServerHilo extends Thread
     {
         try
         {
-            out.print("Ingrese el nombre:");
+            out.println("Ingrese el nombre\n" + "");
             String nombre = in.readLine();
-            out.print("Ingrese el apellido:");
+
+            out.println("Ingrese el apellido\n" + "");
             String apellido = in.readLine();
-            out.print("Ingrese la cedula:");
-            Integer cedula = Integer.getInteger(in.readLine());
-            out.print("Ingrese el password");
+
+            out.println("Ingrese la cedula\n" + "");
+            Integer cedula = Integer.parseInt(in.readLine());
+
+            out.println("Ingrese el password\n" + "");
             String password = in.readLine();
-            servidor.dataBase.almacenarPersona(new Persona(cedula, nombre, apellido, password));
+
+
+            Persona personaCreada = new Persona(cedula, nombre, apellido, password);
+            personaLogueada = personaCreada;
+            servidor.usuariosOnline.add(personaCreada);
+            servidor.dataBase.almacenarPersona(personaCreada);
+
             out.println("Creo su cuenta correctamente!!");
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,12 +54,17 @@ public class TCPServerHilo extends Thread
     {
         try
         {
-            out.print("Ingrese la cedula: ");
-            Integer cedula = Integer.getInteger(in.readLine());
-            Persona personaIngresada = servidor.dataBase.recuperarPersona(cedula);
-            out.print("Ingresar el password: ");
+            out.println("Ingrese la cedula\n" + "");
+            Integer cedula = Integer.parseInt(in.readLine());
+
+            personaLogueada = servidor.dataBase.recuperarPersona(cedula);
+            out.println(personaLogueada);
+
+            out.println("Ingrese el password\n" + "");
             String password = in.readLine();
-            if(personaIngresada.getPassword().equals(password)) {
+
+            if(personaLogueada.getPassword().equals(password)) {
+                servidor.usuariosOnline.add(personaLogueada);
                 out.println("Inicio sesion correctamente!!");
             }
         }
@@ -69,21 +84,41 @@ public class TCPServerHilo extends Thread
                     new InputStreamReader(
                     socket.getInputStream()));
             out.println("Bienvenido!");
-            out.println("1) Crear cuenta\n 2) Iniciar sesion");
+            System.out.println("Ingreso un cliente");
+
             String inputLine, outputLine;
 
-            while ((inputLine = in.readLine()) != null) {
+            while (true)
+            {
+                out.println("1) Crear cuenta");
+                out.println("2) Iniciar sesion");
+                out.println("3) Salir del servidor\n" + "");
+                inputLine = in.readLine();
                 System.out.println("Mensaje recibido: " + inputLine);
-                if (inputLine.equals("1"))
+                if(inputLine.equals("1"))
                     crearCuenta(out, in);
 
                 else if(inputLine.equals("2"))
                     iniciarSesion(out, in);
 
+                else if(inputLine.equals("3"))
+                    break;
 
+                while(true)
+                {
+                    out.println("1) Mostrar usuarios en linea");
+                    out.println("2) Terminar sesion\n" + "");
+                    inputLine = in.readLine();
+                    if(inputLine.equals("1"))
+                        servidor.mostrarUsuariosConectados(out);
 
-
-                
+                    else if(inputLine.equals("2"))
+                    {
+                        servidor.desconectarUsuario(personaLogueada);
+                        personaLogueada = null;
+                        break;
+                    }
+                }
             }
             out.close();
             in.close();

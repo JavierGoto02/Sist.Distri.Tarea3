@@ -26,9 +26,11 @@ public class RedisDB {
     // Método para recuperar una persona
     public Persona recuperarPersona(Integer cedula) {
         String key = "persona:" + cedula;
+        System.out.println("Persona recuperada: " + key);
         String nombre = jedis.hget(key, "nombre");
         String apellido = jedis.hget(key, "apellido");
         String password = jedis.hget(key, "password");
+        System.out.println(nombre + " " + apellido + " " + password);
 
         if (nombre != null && apellido != null && password != null) {
             return new Persona(cedula, nombre, apellido, password);
