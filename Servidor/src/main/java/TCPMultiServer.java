@@ -12,9 +12,11 @@ public class TCPMultiServer {
 
 	//variables compartidas
 	boolean listening = true;
-	List<TCPServerHilo> hilosClientes; //almacenar los hilos (no se utiliza en el ejemplo, se deja para que el alumno lo utilice)
-	List<String> usuarios; //almacenar una lista de usuarios (no se utiliza, se deja para que el alumno lo utilice)
-    List<Persona> usuariosOnline; // Lista de usuarios en linea
+    String mensajeInterfaz = "1) Crear cuenta\n2) Iniciar sesion\n3) Terminar sesion\n 4) Mostrar usuarios conectados";
+//	List<TCPServerHilo> hilosClientes; //almacenar los hilos (no se utiliza en el ejemplo, se deja para que el alumno lo utilice)
+//	List<String> usuarios; //almacenar una lista de usuarios (no se utiliza, se deja para que el alumno lo utilice)
+//    List<Persona> usuariosOnline; // Lista de usuarios en linea
+    RedisDB dataBase = new RedisDB();  // Instancia de la base de datos
 
     public void ejecutar() throws IOException {
         ServerSocket serverSocket = null;
@@ -30,7 +32,7 @@ public class TCPMultiServer {
         while (listening) {
         	
         	TCPServerHilo hilo = new TCPServerHilo(serverSocket.accept(), this);
-            hilosClientes.add(hilo);
+            //hilosClientes.add(hilo);
             hilo.start();
         }
 
@@ -41,9 +43,9 @@ public class TCPMultiServer {
     	
     	TCPMultiServer tms = new TCPMultiServer();
     	
-    	tms.hilosClientes = new ArrayList<TCPServerHilo>();
-    	tms.usuarios = new ArrayList<String>();
-        tms.usuariosOnline = new ArrayList<Persona>();    	
+//        tms.hilosClientes = new ArrayList<TCPServerHilo>();
+//        tms.usuarios = new ArrayList<String>();
+//        tms.usuariosOnline = new ArrayList<Persona>();
     	tms.ejecutar();
     	
     }

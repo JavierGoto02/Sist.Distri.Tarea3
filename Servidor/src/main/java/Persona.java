@@ -1,26 +1,23 @@
 
 public class Persona {
 
-    private Long cedula;
+    private Integer cedula;
     private String nombre;
     private String apellido;
     private String password;
 
-    public Persona() {
-    }
-
-    public Persona(Long cedula, String nombre, String apellido, String password) {
+    public Persona(Integer cedula, String nombre, String apellido, String password) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.password = password;
     }
 
-    public Long getCedula() {
+    public Integer getCedula() {
         return cedula;
     }
 
-    public void setCedula(Long cedula) {
+    public void setCedula(Integer cedula) {
         this.cedula = cedula;
     }
 
