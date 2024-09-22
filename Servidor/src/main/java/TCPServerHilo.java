@@ -21,7 +21,7 @@ public class TCPServerHilo extends Thread
         this.servidor = servidor;
     }
 
-    public void crearCuenta(PrintWriter out, BufferedReader in)
+    private void crearCuenta(PrintWriter out, BufferedReader in)
     {
         try
         {
@@ -40,6 +40,27 @@ public class TCPServerHilo extends Thread
         }
     }
 
+    private void iniciarSesion(PrintWriter out, BufferedReader in)
+    {
+        try
+        {
+            out.print("Ingrese la cedula: ");
+            Integer cedula = Integer.getInteger(in.readLine());
+            Persona personaIngresada = servidor.dataBase.recuperarPersona(cedula);
+            out.print("Ingresar el password: ");
+            String password = in.readLine();
+            if(personaIngresada.getPassword().equals(password)) {
+                out.println("Inicio sesion correctamente!!");
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public void run() {
 
         try {
@@ -56,23 +77,13 @@ public class TCPServerHilo extends Thread
                 if (inputLine.equals("1"))
                     crearCuenta(out, in);
 
-
-
-
                 else if(inputLine.equals("2"))
-                {
-                    out.print("Ingrese la cedula: ");
-                    Integer cedula = Integer.getInteger(in.readLine());
-                    Persona personaIngresada = servidor.dataBase.recuperarPersona(cedula);
-                    out.print("Ingresar el password: ");
-                    String password = in.readLine();
-                    if(personaIngresada.getPassword().equals(password))
-                    {
-                        out.println("Inicio sesion correctamente!!");
-                    }
+                    iniciarSesion(out, in);
 
 
-                }
+
+
+                
             }
             out.close();
             in.close();
