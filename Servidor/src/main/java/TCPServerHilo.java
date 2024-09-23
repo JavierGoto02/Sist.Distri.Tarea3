@@ -50,7 +50,7 @@ public class TCPServerHilo extends Thread
         }
     }
 
-    private void iniciarSesion(PrintWriter out, BufferedReader in)
+    private boolean iniciarSesion(PrintWriter out, BufferedReader in)
     {
         try
         {
@@ -58,20 +58,23 @@ public class TCPServerHilo extends Thread
             Integer cedula = Integer.parseInt(in.readLine());
 
             personaLogueada = servidor.dataBase.recuperarPersona(cedula);
+            if(personaLogueada == null) return false;
             out.println(personaLogueada);
-
             out.println("Ingrese el password\n" + "");
             String password = in.readLine();
 
             if(personaLogueada.getPassword().equals(password)) {
                 servidor.usuariosOnline.add(personaLogueada);
                 out.println("Inicio sesion correctamente!!");
+                return true;
             }
+            
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
+        return false;
     }
 
 
@@ -98,27 +101,28 @@ public class TCPServerHilo extends Thread
                 if(inputLine.equals("1"))
                     crearCuenta(out, in);
 
-                else if(inputLine.equals("2"))
-                    iniciarSesion(out, in);
+                else if(inputLine.equals("2")){
+                    boolean inicio = iniciarSesion(out, in);
+                    while(inicio){
+                        out.println("1) Mostrar usuarios en linea");
+                        out.println("2) Terminar sesion\n" + "");
+                        inputLine = in.readLine();
+                        if(inputLine.equals("1"))
+                            servidor.mostrarUsuariosConectados(out);
+
+                        else if(inputLine.equals("2"))
+                        {
+                            servidor.desconectarUsuario(personaLogueada);
+                            personaLogueada = null;
+                            break;
+                        }
+                    }
+                }
 
                 else if(inputLine.equals("3"))
                     break;
 
-                while(true)
-                {
-                    out.println("1) Mostrar usuarios en linea");
-                    out.println("2) Terminar sesion\n" + "");
-                    inputLine = in.readLine();
-                    if(inputLine.equals("1"))
-                        servidor.mostrarUsuariosConectados(out);
-
-                    else if(inputLine.equals("2"))
-                    {
-                        servidor.desconectarUsuario(personaLogueada);
-                        personaLogueada = null;
-                        break;
-                    }
-                }
+                
             }
             out.close();
             in.close();
