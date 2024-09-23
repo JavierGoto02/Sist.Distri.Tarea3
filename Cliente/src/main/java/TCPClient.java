@@ -54,7 +54,7 @@ public class TCPClient
             while (true)
             {
                 leerEntrada(in, fromServer);
-                System.out.print("\nCliente:");
+                //1System.out.print("\nCliente:");
                 fromUser = stdIn.readLine();
                 System.out.println();
                 out.println(fromUser);
