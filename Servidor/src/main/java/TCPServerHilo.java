@@ -40,7 +40,6 @@ public class TCPServerHilo extends Thread
 
 
             Persona personaCreada = new Persona(cedula, nombre, apellido, password);
-            personaLogueada = personaCreada;
             servidor.dataBase.almacenarPersona(personaCreada);
 
             out.println("Creo su cuenta correctamente!!");
