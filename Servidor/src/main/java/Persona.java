@@ -44,4 +44,9 @@ public class Persona {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Nombre:" + nombre + ", Apellido:" + apellido + ", Cedula:" + cedula;
+    }
 }

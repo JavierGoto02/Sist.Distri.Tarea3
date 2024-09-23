@@ -5,10 +5,10 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copia el archivo JAR generado por Maven a la imagen Docker
-COPY target/Servidor-1.0-SNAPSHOT.jar /app/Servidor-1.0-SNAPSHOT.jar
+COPY target/Servidor-1.jar /app/Servidor-1.jar
 
 # Expone el puerto donde el servidor escucha
 EXPOSE 4444
 
 # Comando para ejecutar la aplicación
-CMD ["java", "-jar", "Servidor-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "Servidor-1.jar"]
