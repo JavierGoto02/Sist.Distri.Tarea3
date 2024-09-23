@@ -1,14 +1,8 @@
-# Usa una imagen base de Java
-FROM openjdk:11-jre-slim
+# Usamos la imagen oficial de Redis
+FROM redis:latest
 
-# Establece el directorio de trabajo
-WORKDIR /app
+# Exponemos el puerto predeterminado de Redis
+EXPOSE 6379
 
-# Copia el archivo JAR generado por Maven a la imagen Docker
-COPY target/Servidor-1.jar /app/Servidor-1.jar
-
-# Expone el puerto donde el servidor escucha
-EXPOSE 4444
-
-# Comando para ejecutar la aplicación
-CMD ["java", "-jar", "Servidor-1.jar"]
+# Comando por defecto para iniciar el servidor Redis
+CMD ["redis-server"]
