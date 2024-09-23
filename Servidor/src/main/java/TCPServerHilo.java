@@ -26,22 +26,21 @@ public class TCPServerHilo extends Thread
     {
         try
         {
-            out.println("Ingrese el nombre\n" + "");
+            out.println("Ingrese el nombre:\n" + "");
             String nombre = in.readLine();
 
-            out.println("Ingrese el apellido\n" + "");
+            out.println("Ingrese el apellido:\n" + "");
             String apellido = in.readLine();
 
-            out.println("Ingrese la cedula\n" + "");
+            out.println("Ingrese la cedula:\n" + "");
             Integer cedula = Integer.parseInt(in.readLine());
 
-            out.println("Ingrese el password\n" + "");
+            out.println("Ingrese el password:\n" + "");
             String password = in.readLine();
 
 
             Persona personaCreada = new Persona(cedula, nombre, apellido, password);
             personaLogueada = personaCreada;
-            servidor.usuariosOnline.add(personaCreada);
             servidor.dataBase.almacenarPersona(personaCreada);
 
             out.println("Creo su cuenta correctamente!!");
@@ -54,18 +53,18 @@ public class TCPServerHilo extends Thread
     {
         try
         {
-            out.println("Ingrese la cedula\n" + "");
+            out.println("Ingrese la cedula:\n" + "");
             Integer cedula = Integer.parseInt(in.readLine());
 
             personaLogueada = servidor.dataBase.recuperarPersona(cedula);
             if(personaLogueada == null) return false;
             out.println(personaLogueada);
-            out.println("Ingrese el password\n" + "");
+            out.println("Ingrese el password:\n" + "");
             String password = in.readLine();
 
             if(personaLogueada.getPassword().equals(password)) {
-                servidor.usuariosOnline.add(personaLogueada);
                 out.println("Inicio sesion correctamente!!");
+                servidor.usuariosOnline.add(personaLogueada);
                 return true;
             }
             
