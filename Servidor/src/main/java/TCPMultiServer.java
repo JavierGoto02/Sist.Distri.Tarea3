@@ -13,7 +13,7 @@ public class TCPMultiServer {
 	//variables compartidas
 	boolean listening = true;
     List<Persona> usuariosOnline; // Lista de usuarios en linea
-    RedisDB dataBase = new RedisDB();  // Instancia de la base de datos
+    RedisDB dataBase = new RedisDB();  // Guarda usuarios existentes
 
     public void ejecutar() throws IOException {
         ServerSocket serverSocket = null;

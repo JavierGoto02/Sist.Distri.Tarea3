@@ -1,7 +1,5 @@
 import redis.clients.jedis.Jedis;
 
-import java.util.Set;
-
 /* Esta clase se encarga de la conexión con la base de datos Redis
    agregar Persona y recuperar Persona  
 */
@@ -37,18 +35,6 @@ public class RedisDB {
         }
         return null; // Persona no encontrada
     }
-
-    public void listarUsuariosOnline()
-    {
-        Set<String> claves = jedis.keys("*");
-        System.out.println("Clientes conectados:");
-        for(String clave : claves)
-        {
-            String nombre = jedis.hget(clave, "nombre");
-            System.out.println(clave + " -> " + nombre);
-        }
-    }
-
 
     // Método para cerrar la conexión
     public void cerrar() {
