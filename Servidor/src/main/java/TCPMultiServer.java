@@ -35,10 +35,18 @@ public class TCPMultiServer {
         serverSocket.close();
     }
 
+    // Muestra los usuarios conectados
     public void mostrarUsuariosConectados(PrintWriter out) throws IOException
     {
         for(Persona p : usuariosOnline)
             out.println("* " + p);
+    }
+
+    // Muestra los usuarios en la base de datos
+    public void mostrarUsuarios(PrintWriter out, List<Integer> usersId) throws IOException
+    {
+        for(Integer id : usersId)
+            out.println("* " + dataBase.recuperarPersona(id));
     }
 
     public void desconectarUsuario(Persona p) {usuariosOnline.remove(p);}

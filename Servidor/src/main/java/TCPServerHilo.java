@@ -13,9 +13,7 @@ public class TCPServerHilo extends Thread
     private Socket socket = null;
     TCPMultiServer servidor;
     Persona personaLogueada;
-    // Metodos: almacenarPersona(Persona persona), recuperarPersona(Long cedula)
-
-    
+        
     public TCPServerHilo(Socket socket, TCPMultiServer servidor) {
         super("TCPServerHilo");
         this.socket = socket;
@@ -87,7 +85,7 @@ public class TCPServerHilo extends Thread
             out.println("Bienvenido!");
             System.out.println("Ingreso un cliente");
 
-            String inputLine, outputLine;
+            String inputLine;
 
             while (true)
             {
@@ -102,13 +100,18 @@ public class TCPServerHilo extends Thread
                 else if(inputLine.equals("2")){
                     boolean inicio = iniciarSesion(out, in);
                     while(inicio){
-                        out.println("1) Mostrar usuarios en linea");
-                        out.println("2) Terminar sesion\n" + "");
+                        out.println("1) Mostrar usuarios en linea" + "");
+                        out.println("2) Mostrar todos los usuarios" + "");
+                        out.println("3) Terminar sesion\n" + "");
                         inputLine = in.readLine();
                         if(inputLine.equals("1"))
                             servidor.mostrarUsuariosConectados(out);
 
                         else if(inputLine.equals("2"))
+                        {
+                            servidor.mostrarUsuarios(out, servidor.dataBase.obtenerTodosLosCisDePersonas());
+                        }
+                        else if(inputLine.equals("3"))
                         {
                             servidor.desconectarUsuario(personaLogueada);
                             personaLogueada = null;
