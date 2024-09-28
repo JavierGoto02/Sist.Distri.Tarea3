@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.stream.Stream;
 
 public class TCPClient
 {
@@ -9,7 +8,6 @@ public class TCPClient
     private static void leerEntrada(BufferedReader in, String fromServer) throws IOException
     {
 
-        System.out.println("Servidor:");
         while(true)
         {
             fromServer = in.readLine();
@@ -54,19 +52,18 @@ public class TCPClient
             while (true)
             {
                 leerEntrada(in, fromServer);
-                //1System.out.print("\nCliente:");
                 fromUser = stdIn.readLine();
                 System.out.println();
                 out.println(fromUser);
-                if (fromUser.equals("3"))
+                if (fromUser.equals("3")){
                     break;
+                }
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-
         out.close();
         in.close();
         stdIn.close();

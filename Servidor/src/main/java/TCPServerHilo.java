@@ -1,5 +1,4 @@
 import java.net.*;
-import java.util.Iterator;
 import java.io.*;
 /*
  * En esta clase se maneja la comunicacion con un cliente independientemente
@@ -100,18 +99,18 @@ public class TCPServerHilo extends Thread
                 else if(inputLine.equals("2")){
                     boolean inicio = iniciarSesion(out, in);
                     while(inicio){
-                        out.println("1) Mostrar usuarios en linea" + "");
-                        out.println("2) Mostrar todos los usuarios" + "");
-                        out.println("3) Terminar sesion\n" + "");
+                        out.println("a) Mostrar usuarios en linea" + "");
+                        out.println("b) Mostrar todos los usuarios" + "");
+                        out.println("c) Terminar sesion\n" + "");
                         inputLine = in.readLine();
-                        if(inputLine.equals("1"))
+                        if(inputLine.equals("a"))
                             servidor.mostrarUsuariosConectados(out);
 
-                        else if(inputLine.equals("2"))
+                        else if(inputLine.equals("b"))
                         {
                             servidor.mostrarUsuarios(out, servidor.dataBase.obtenerTodosLosCisDePersonas());
                         }
-                        else if(inputLine.equals("3"))
+                        else if(inputLine.equals("c"))
                         {
                             servidor.desconectarUsuario(personaLogueada);
                             personaLogueada = null;
